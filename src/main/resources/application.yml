@@ -1,0 +1,30 @@
+# -------------------------------------------------------------
+# Load (Dev/Test/Prod) properties external to your war/jar
+# -------------------------------------------------------------
+# You can use load.properties to load the properties from a
+# file external to your war/jar.
+#load.properties.override=${admin.home}/config/my-application.properties
+# -------------------------------------------------------------
+# CORE
+# -------------------------------------------------------------
+ebean:
+  packages: sample.spring.data.ebean.domain
+  ddl:
+    generate: true
+    run: true
+  migration:
+    run: false
+  debug:
+    sql: true
+    lazyload: false
+    logging:
+      logfilesharing: all
+      directory: logs
+      iud: sql
+      query: sql
+      sqlquery: sql
+      txnCommit: none
+spring:
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss

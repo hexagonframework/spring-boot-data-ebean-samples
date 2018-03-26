@@ -16,13 +16,15 @@
 
 package sample.spring.data.ebean.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
@@ -33,7 +35,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.springframework.data.ebean.domain.AbstractEntity;
 import org.springframework.data.ebean.domain.AggregateRoot;
 
@@ -48,7 +49,6 @@ import org.springframework.data.ebean.domain.AggregateRoot;
 @Table(name = "user")
 @Getter
 @Setter
-@ToString
 public class User extends AbstractEntity {
 
   @Embedded
@@ -74,9 +74,6 @@ public class User extends AbstractEntity {
   @Lob
   private byte[] binaryData;
 
-  @ElementCollection
-  private Set<String> attributes;
-
   @Temporal(TemporalType.DATE)
   private Date dateOfBirth;
 
@@ -101,7 +98,6 @@ public class User extends AbstractEntity {
     this.active = true;
     this.roles = new HashSet<Role>(Arrays.asList(roles));
     this.colleagues = new HashSet<User>();
-    this.attributes = new HashSet<String>();
   }
 
   public void changeEmail(String emailAddress) {
@@ -134,5 +130,17 @@ public class User extends AbstractEntity {
   public void removeColleague(User colleague) {
     colleagues.remove(colleague);
     colleague.getColleagues().remove(this);
+  }
+
+  @Override
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  public Optional<LocalDateTime> getCreatedDate() {
+    return super.getCreatedDate();
+  }
+
+  @Override
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  public Optional<LocalDateTime> getLastModifiedDate() {
+    return super.getLastModifiedDate();
   }
 }

@@ -96,5 +96,6 @@
   <!--<logger name="io.ebeaninternal.server.autotune" level="TRACE"/>-->
 
   <!--<logger name="io.ebean.ChangeLog" level="INFO"/>-->
+  <logger name="org.springframework" level="INFO" />
 
 </configuration>
